@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="./favicon.ico" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Throw Mechanic POC</title>
+    <script type="module" defer="defer" src="./js/ball.js"></script>
+    <script type="module" defer="defer" src="./js/pop.js"></script>
+    <script type="module" defer="defer" src="./js/main.js"></script>
+    <link href="./css/main.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="main-container">
+        <div id="canvas-holder">
+          <svg width="512" height="512" viewbox="0 0 512 512">
+            <ellipse cx="250" cy="185" rx="40" ry="20" />
+            <line x1="0" y1="185" x2="5120" y2="185" stroke="black" stroke-width="1"/>
+          </svg>
+          <canvas id="canvas" width="512" height="512">
+            Your browser does not support the HTML5 canvas tag.
+          </canvas>
+        </div>
+      </div>
+      </body>
+</html>
