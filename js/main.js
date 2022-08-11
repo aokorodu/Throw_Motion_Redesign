@@ -32,7 +32,7 @@ function mousedownHandler(e) {
 function mouseupHandler(e) {
   const throwVelocity = getThrowVelocity();
   const speed = Math.abs(throwVelocity.y);
-  let rollSpeed = speed/20 * 8;
+  let rollSpeed = speed/20 * 4;
   if(rollSpeed < 2) rollSpeed = 2;
   console.log('rollSpeed: ', rollSpeed)
   speed > 0.1 ? ball.dropBall() : ball.releaseBall();
@@ -42,12 +42,12 @@ function mouseupHandler(e) {
 }
 
 function getThrowVelocity() {
-  let xvel = mousePos.x - mousePos_old.x;
+  let xvel = (mousePos.x - mousePos_old.x) * .667;
   let yvel = mousePos.y - mousePos_old.y;
   if(yvel < -20) yvel = -20;
   return {
-    x: xvel / 2,
-    y: yvel < -20 ? -20 : yvel
+    x: xvel,
+    y: yvel
   };
 }
 

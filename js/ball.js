@@ -31,7 +31,7 @@ class Ball {
     this.decay = 0.995;
     this.yIncrement = 8;
     this.totalIncrement = 0;
-    this.targetDistance = 275;
+    this.targetDistance = 325;
     this.tau = 2 * Math.PI;
   }
 
@@ -42,6 +42,8 @@ class Ball {
   }
 
   pickUpBall() {
+    if(this.scored) return;
+    if(this.dropped) return;
     this.dragging = true;
     this.dropped = false;
   }
@@ -99,9 +101,10 @@ class Ball {
     }
 
     if (this.dropped) {
-      this.r *= this.decay;
+      
       this.yIncrement *= this.decay;
       this.totalIncrement += this.yIncrement;
+      this.r = (512 - (this.totalIncrement*1.25))/512 * 30;
       if (!this.scored) this.ctx.translate(0, -this.yIncrement);
 
       if (this.totalIncrement > this.targetDistance) {
@@ -122,7 +125,7 @@ class Ball {
           this.scored = true;
           this.max = 600;
           this.ctx.beginPath();
-          this.ctx.ellipse(250, 460, 40, 20, 0, 0, this.tau);
+          this.ctx.ellipse(250, 450, 40, 20, 0, 0, this.tau);
           this.ctx.clip();
         } else {
           if (!this.scored) {
