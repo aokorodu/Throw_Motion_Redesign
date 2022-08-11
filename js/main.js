@@ -3,7 +3,7 @@ import Pop from './pop.js';
 
 const canvas = document.querySelector("#canvas");
 const ctx = canvas.getContext("2d");
-const tau = Math.PI * 2;
+const speedText = document.querySelector("#speed-text")
 let r = 30;
 let w = 512;
 let h = 512;
@@ -18,8 +18,18 @@ let mousePos_old = {
   y: 0
 };
 
-canvas.addEventListener("mousedown", mousedownHandler);
-canvas.addEventListener("mouseup", mouseupHandler);
+function initListeners(){
+    canvas.addEventListener("mousedown", mousedownHandler);
+    canvas.addEventListener("mouseup", mouseupHandler);
+    const speedSlider = document.querySelector("#speed-slider");
+    speedSlider.addEventListener("input", (e)=>{
+        console.log(e.target.value);
+        speedText.textContent = e.target.value;
+        ball.setMaxSpeed(e.target.value)
+    })
+}
+
+initListeners();
 animate();
 
 function mousedownHandler(e) {
@@ -32,11 +42,9 @@ function mousedownHandler(e) {
 function mouseupHandler(e) {
   const throwVelocity = getThrowVelocity();
   const speed = Math.abs(throwVelocity.y);
-  let rollSpeed = speed/20 * 4;
-  if(rollSpeed < 2) rollSpeed = 2;
-  console.log('rollSpeed: ', rollSpeed)
+  const speedPercentage = speed/20;
   speed > 0.1 ? ball.dropBall() : ball.releaseBall();
-  ball.setSpeed(rollSpeed)
+  ball.setSpeed(speedPercentage)
   ball.pushBall(throwVelocity);
   canvas.removeEventListener("mousemove", mousemoveHandler);
 }

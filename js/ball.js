@@ -29,6 +29,7 @@ class Ball {
     this.scored = false;
     this.count = 0;
     this.decay = 0.995;
+    this.maxYIncrement = 2;
     this.yIncrement = 8;
     this.totalIncrement = 0;
     this.targetDistance = 325;
@@ -37,8 +38,13 @@ class Ball {
 
   init() {}
 
-  setSpeed(newSpeed) {
-    this.yIncrement = newSpeed;
+  setMaxSpeed(newMax){
+    this.maxYIncrement = newMax;
+  }
+
+  setSpeed(percentage) {
+    this.yIncrement = percentage * this.maxYIncrement;
+    console.log('yIncrement: ', this.yIncrement)
   }
 
   pickUpBall() {

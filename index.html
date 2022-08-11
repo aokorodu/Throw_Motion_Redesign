@@ -12,15 +12,26 @@
   </head>
   <body>
     <div id="main-container">
-        <div id="canvas-holder">
-          <svg width="512" height="512" viewbox="0 0 512 512">
-            <ellipse cx="250" cy="130" rx="40" ry="20" />
-            <line x1="0" y1="130" x2="5120" y2="130" stroke="black" stroke-width="1"/>
-          </svg>
-          <canvas id="canvas" width="512" height="512">
-            Your browser does not support the HTML5 canvas tag.
-          </canvas>
-        </div>
+      <div id="canvas-holder">
+        <svg width="512" height="512" viewbox="0 0 512 512">
+          <ellipse cx="250" cy="130" rx="40" ry="20" />
+          <line
+            x1="0"
+            y1="130"
+            x2="5120"
+            y2="130"
+            stroke="black"
+            stroke-width="1"
+          />
+        </svg>
+        <canvas id="canvas" width="512" height="512">
+          Your browser does not support the HTML5 canvas tag.
+        </canvas>
       </div>
-      </body>
+      <div class="slider-holder">
+        <label>speed</label>
+        <input id="speed-slider" type="range" min="2" max="20" value="2" step=".1"/><span class="speed-text" id="speed-text">2</span>
+    </div>
+    </div>
+  </body>
 </html>
