@@ -110,6 +110,7 @@ class Ball {
     if (this.dropped) {
       
       this.yIncrement *= this.decay;
+      console.log('increment: ', this.yIncrement)
       this.totalIncrement += this.yIncrement;
       this.r = (512 - (this.totalIncrement*1.25))/512 * 30;
       if (!this.scored) this.ctx.translate(0, -this.yIncrement);
@@ -131,9 +132,14 @@ class Ball {
           console.log("hole in one!");
           this.scored = true;
           this.max = 600;
+          this.ctx.save();
           this.ctx.beginPath();
           this.ctx.ellipse(250, 450, 40, 20, 0, 0, this.tau);
           this.ctx.clip();
+          setTimeout(()=>{
+            this.ctx.restore();
+            this.reset();
+          }, 1000);
         } else {
           if (!this.scored) {
             this.onCrash(this.position.x, this.position.y);
@@ -186,12 +192,13 @@ class Ball {
     };
 
     this.r = 30;
-    this.yIncrement = 8;
+    this.yIncrement = this.maxYIncrement;
     this.totalIncrement = 0;
 
     this.dragging = false;
     this.dropped = false;
     this.count = 0;
+    this.scored = false;
 
     this.max = this.h - this.r - 20;
     this.ctx.setTransform(1, 0, 0, 1, 0, 0);
