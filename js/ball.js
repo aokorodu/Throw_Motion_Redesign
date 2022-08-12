@@ -9,7 +9,7 @@ class Ball {
     this.max = h - this.r - 20;
     this.accel = {
       x: 0,
-      y: 0.9,
+      y: 1,
     };
     this.velocity = {
       x: 0,
@@ -29,8 +29,8 @@ class Ball {
     this.scored = false;
     this.count = 0;
     this.decay = 0.995;
-    this.maxYIncrement = 2;
-    this.yIncrement = 8;
+    this.maxYIncrement = 4;
+    this.yIncrement = 4;
     this.totalIncrement = 0;
     this.targetDistance = 325;
     this.tau = 2 * Math.PI;
@@ -44,6 +44,7 @@ class Ball {
 
   setSpeed(percentage) {
     this.yIncrement = percentage * this.maxYIncrement;
+    if(this.yIncrement < 2) this.yIncrement = 2
     console.log('yIncrement: ', this.yIncrement)
   }
 
@@ -76,6 +77,7 @@ class Ball {
 
     this.accel.x += force.x;
     this.accel.y += force.y;
+    console.log(this.accel.y)
   }
 
   draw() {
@@ -172,7 +174,7 @@ class Ball {
     console.log("reset");
     this.accel = {
       x: 0,
-      y: 0.9,
+      y: 1,
     };
     this.velocity = {
       x: 0,

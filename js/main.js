@@ -3,7 +3,9 @@ import Pop from './pop.js';
 
 const canvas = document.querySelector("#canvas");
 const ctx = canvas.getContext("2d");
-const speedText = document.querySelector("#speed-text")
+const speedText = document.querySelector("#speed-text");
+const breezeText = document.querySelector("#breeze-text");
+let breeze = 0;
 let r = 30;
 let w = 512;
 let h = 512;
@@ -18,6 +20,10 @@ let mousePos_old = {
   y: 0
 };
 
+function init(){
+    ball.setMaxSpeed(document.querySelector("#speed-slider").value)
+}
+
 function initListeners(){
     canvas.addEventListener("mousedown", mousedownHandler);
     canvas.addEventListener("mouseup", mouseupHandler);
@@ -27,8 +33,16 @@ function initListeners(){
         speedText.textContent = e.target.value;
         ball.setMaxSpeed(e.target.value)
     })
+
+    const breezeSlider = document.querySelector("#breeze-slider");
+    breezeSlider.addEventListener("input", (e)=>{
+        const val = e.target.value;
+        breezeText.textContent = val;
+        breeze = val * 1;
+    })
 }
 
+init();
 initListeners();
 animate();
 
@@ -37,16 +51,23 @@ function mousedownHandler(e) {
   mousePos = getPosition(e);
   ball.pickUpBall();
   canvas.addEventListener("mousemove", mousemoveHandler);
+  canvas.addEventListener("mouseout", mouseupHandler);
 }
 
 function mouseupHandler(e) {
   const throwVelocity = getThrowVelocity();
-  const speed = Math.abs(throwVelocity.y);
-  const speedPercentage = speed/20;
+  console.log('throwVelocity', throwVelocity.y)
+  let speed = Math.abs(throwVelocity.y);
+  if(speed < 1) speed = 1;
   speed > 0.1 ? ball.dropBall() : ball.releaseBall();
+  let speedPercentage = speed/20;
+  console.log('1 speed %', speedPercentage)
+  if(speedPercentage < .3) speedPercentage = .3;
+  console.log('2 speed %', speedPercentage)
   ball.setSpeed(speedPercentage)
   ball.pushBall(throwVelocity);
   canvas.removeEventListener("mousemove", mousemoveHandler);
+  canvas.removeEventListener("mouseout", mouseupHandler);
 }
 
 function getThrowVelocity() {
@@ -84,7 +105,7 @@ function crash(x, y) {
 function animate() {
   ctx.clearRect(0, 0, 512, 512);
   ball.dragBall(mousePos);
-  //ball.pushBall({x:.025, y:0})
+  ball.pushBall({x:breeze, y:0})
   ball.update();
   pop.update();
   window.requestAnimationFrame(animate);
