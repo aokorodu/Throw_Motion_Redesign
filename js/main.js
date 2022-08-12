@@ -29,7 +29,6 @@ function initListeners(){
     canvas.addEventListener("mouseup", mouseupHandler);
     const speedSlider = document.querySelector("#speed-slider");
     speedSlider.addEventListener("input", (e)=>{
-        console.log(e.target.value);
         speedText.textContent = e.target.value;
         ball.setMaxSpeed(e.target.value)
     })
@@ -56,14 +55,11 @@ function mousedownHandler(e) {
 
 function mouseupHandler(e) {
   const throwVelocity = getThrowVelocity();
-  console.log('throwVelocity', throwVelocity.y)
   let speed = Math.abs(throwVelocity.y);
   if(speed < 1) speed = 1;
   speed > 0.1 ? ball.dropBall() : ball.releaseBall();
   let speedPercentage = speed/20;
-  console.log('1 speed %', speedPercentage)
   if(speedPercentage < .3) speedPercentage = .3;
-  console.log('2 speed %', speedPercentage)
   ball.setSpeed(speedPercentage)
   ball.pushBall(throwVelocity);
   canvas.removeEventListener("mousemove", mousemoveHandler);

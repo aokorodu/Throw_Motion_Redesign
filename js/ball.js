@@ -77,7 +77,6 @@ class Ball {
 
     this.accel.x += force.x;
     this.accel.y += force.y;
-    console.log(this.accel.y)
   }
 
   draw() {
